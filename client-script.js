@@ -32,7 +32,6 @@ function onLoad() {
  }
 
 
- //Lab 2.2
 
  function onChange(control, oldValue, newValue, isLoading, isTemplate) {
     if (isLoading || newValue === '') {
@@ -62,6 +61,7 @@ callback(saveAndClose);
 }
 
 
+ //Lab 2.2
 
 function onSubmit() {
  
@@ -85,3 +85,43 @@ function onSubmit() {
     }
  
 }
+
+ //Lab 2.3
+
+ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+	if (isLoading || newValue == '') {
+		return;
+	}
+	
+	//Document the current value of State, if New, use a decoration
+	var incState = g_form.getValue('state');
+	alert('LUCAS - O Valor do campo state é:' + incState);
+	
+	if (incState == 1) {
+		alert("LUCAS - Linha 11 executada");
+		g_form.addDecoration('state', 'icon-edit','Gathering initial details');
+		g_form.flash('state', "teal", -4);
+	}
+	
+	//Take this action if the new value of Impact is 1 or 2
+	if (newValue == 1 || newValue == 2){
+			g_form.removeOption('state', 3);  //On Hold
+			g_form.removeOption('state', 6);  //Resolved
+			g_form.removeOption('state', 7);  //Closed
+			g_form.removeOption('state', 8);  //Canceled
+			g_form.addInfoMessage("The State options have been removed");
+	}
+	
+	//Take this action if the form is not loading the new value of Impact is NOT 1 or 2
+	else if (!isLoading && newValue != 1 && newValue != 2){
+			g_form.clearOption('state');
+			g_form.addOption('state', 1, 'New', 0);
+			g_form.addOption('state', 2, 'In Progress', 1);
+			g_form.addOption('state', 3, 'On Hold', 2);
+			g_form.addOption('state', 6, 'Resolved', 3);
+			g_form.addOption('state', 7, 'Closed', 4);
+			g_form.addOption('state', 8, 'Canceled', 5);
+			g_form.setValue('state', incState);
+	}
+}
+
